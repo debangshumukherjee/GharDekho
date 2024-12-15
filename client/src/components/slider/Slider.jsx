@@ -33,9 +33,9 @@ function Slider({ images }) {
         </div>
       )}
 
-      {images.length === 1 ? ( // Check if there is only one image
+      {images.length === 0 ? <img src="/Image_not_available.png" alt="No Image Available" /> :(images.length === 1 ? ( // Check if there is only one image
         <div className="singleImage">
-          <img src={images[0]} alt="" />
+          <img src={images[0]} alt="" onClick={() => setImageIndex(0)}/>
         </div>
       ) : (
         <>
@@ -70,7 +70,7 @@ function Slider({ images }) {
             )}
           </div>
         </>
-      )}
+      ))}
     </div>
   );
 }

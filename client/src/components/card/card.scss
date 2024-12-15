@@ -9,6 +9,12 @@
     height: 200px;
 
     @include md {
+      height: 150px;
+    }
+    @include sm {
+      height: 100px;
+    }
+    @include supersm {
       display: none;
     }
 

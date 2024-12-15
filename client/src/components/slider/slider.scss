@@ -79,6 +79,13 @@
     }
   }
 
+  .singleImage {
+    flex: 3;
+    @include sm {
+      flex: 2;
+    }
+  }
+
   .bigImage {
     flex: 3;
 

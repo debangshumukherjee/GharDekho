@@ -10,11 +10,13 @@ function NewPostPage() {
   const [value, setValue] = useState("");
   const [images, setImages] = useState([]);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData(e.target);
     const inputs = Object.fromEntries(formData);
 
@@ -59,15 +61,15 @@ function NewPostPage() {
           <form onSubmit={handleSubmit}>
             <div className="item">
               <label htmlFor="title">Title</label>
-              <input id="title" name="title" type="text" />
+              <input id="title" name="title" type="text" required/>
             </div>
             <div className="item">
               <label htmlFor="price">Price</label>
-              <input id="price" name="price" type="number" />
+              <input id="price" name="price" type="number" required/>
             </div>
             <div className="item">
               <label htmlFor="address">Address</label>
-              <input id="address" name="address" type="text" />
+              <input id="address" name="address" type="text" required/>
             </div>
             <div className="item description">
               <label htmlFor="desc">Description</label>
@@ -75,23 +77,23 @@ function NewPostPage() {
             </div>
             <div className="item">
               <label htmlFor="city">City</label>
-              <input id="city" name="city" type="text" />
+              <input id="city" name="city" type="text" required/>
             </div>
             <div className="item">
               <label htmlFor="bedroom">Bedroom Number</label>
-              <input min={1} id="bedroom" name="bedroom" type="number" />
+              <input min={0} id="bedroom" name="bedroom" type="number" required/>
             </div>
             <div className="item">
               <label htmlFor="bathroom">Bathroom Number</label>
-              <input min={1} id="bathroom" name="bathroom" type="number" />
+              <input min={0} id="bathroom" name="bathroom" type="number" required/>
             </div>
             <div className="item">
               <label htmlFor="latitude">Latitude</label>
-              <input id="latitude" name="latitude" type="text" />
+              <input id="latitude" name="latitude" type="text" required/>
             </div>
             <div className="item">
               <label htmlFor="longitude">Longitude</label>
-              <input id="longitude" name="longitude" type="text" />
+              <input id="longitude" name="longitude" type="text" required/>
             </div>
             <div className="item">
               <label htmlFor="type">Type</label>
@@ -107,8 +109,8 @@ function NewPostPage() {
               <select name="property">
                 <option value="apartment">Apartment</option>
                 <option value="house">House</option>
-                {/* <option value="condo">Condo</option>
-                <option value="land">Land</option> */}
+                {/* <option value="condo">Condo</option> */}
+                <option value="land">Land</option>
               </select>
             </div>
 
@@ -134,25 +136,26 @@ function NewPostPage() {
                 name="income"
                 type="text"
                 placeholder="Income Policy"
+                required
               />
             </div>
             <div className="item">
               <label htmlFor="size">Total Size (sqft)</label>
-              <input min={0} id="size" name="size" type="number" />
+              <input min={0} id="size" name="size" type="number" required/>
             </div>
             <div className="item">
               <label htmlFor="school">Dist from School</label>
-              <input min={0} id="school" name="school" type="number" />
+              <input min={0} id="school" name="school" type="number" required/>
             </div>
             <div className="item">
               <label htmlFor="bus">Dist from Bus Stand</label>
-              <input min={0} id="bus" name="bus" type="number" />
+              <input min={0} id="bus" name="bus" type="number" required/>
             </div>
             <div className="item">
               <label htmlFor="restaurant">Dist from Restaurant</label>
-              <input min={0} id="restaurant" name="restaurant" type="number" />
+              <input min={0} id="restaurant" name="restaurant" type="number" required/>
             </div>
-            <button className="sendButton">Add</button>
+            <button className="sendButton" disabled={isLoading}>Add</button>
             {error && <span>error</span>}
           </form>
         </div>

@@ -17,6 +17,7 @@
     @include md{
       flex:none;
       height: max-content;
+      
     }
 
     .wrapper{
@@ -24,7 +25,7 @@
       display: flex;
       flex-direction: column;
       gap: 50px;
-
+      overflow-y: auto;
       .title{
         display: flex;
         align-items: center;

@@ -179,6 +179,11 @@
         padding: 20px 10px;
         background-color: white;
         border-radius: 10px;
+
+        @include pic470{
+          flex-direction: column;
+          gap: 10px;
+        }
       }
 
       .sizes {
@@ -187,6 +192,10 @@
 
         @include lg {
           font-size: 12px;
+        }
+        @include pic470{
+          flex-direction: column;
+          gap: 10px;
         }
 
         .size {
