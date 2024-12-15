@@ -145,19 +145,30 @@ sh start.sh
 - **Home Page (Before Sign-In)**: Overview of the platform and features.  
   ![Home Page (Before Sign-In)](assets/HomePage.png)
 
+
+
 - **Search Page (Before Sign-In)**: Search properties using filters.  
   ![Search Page (Before Sign-In)](assets/ListPage.png)
 
+
+
 - **Sign-In Page**: User authentication interfaces.  
   ![Sign-In Page](assets/signin.png)
+
+
   
 - **Sign-Up Page**: User authentication interfaces.  
  ![Sign-Up Page](assets/signup.png)
 
+
+
 - **Property Details Page**: Detailed view of a single property with options to save or contact the seller.  
   ![Property Details Page](assets/property-details.png)
 
+
+
 - **Profile Page**: Manage saved listings, posted properties, and user details.  
   ![Profile Page](assets/profile-page.png)
+
 
 ---
