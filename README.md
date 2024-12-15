@@ -65,6 +65,7 @@ cd GharDekho
 cd client
 npm i
 npm i react
+npm i sass
 npm i react-leaflet leaflet
 npm i dompurify
 npm i timeago.js
