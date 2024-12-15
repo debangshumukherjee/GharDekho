@@ -38,7 +38,7 @@ Follow these steps to set up the project locally:
 ### **1. Clone the Repository**
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/debangshumukherjee/GharDekho.git
 cd GharDekho
 ```
 
@@ -91,19 +91,19 @@ npm i socket.io
 - **Start the client:**
   ```bash
   cd client
-  npm start
+  npm run dev
   ```
 
 - **Start the API server:**
   ```bash
   cd ../api
-  npm run dev
+  nodemon app.js
   ```
 
 - **Start the Socket server:**
   ```bash
   cd ../socket
-  npm run dev
+  nodemon app.js
   ```
 
 ---
