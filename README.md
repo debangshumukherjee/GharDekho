@@ -2,6 +2,23 @@
 
 ---
 
+## **Table of Contents**
+
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Tech Stack](#tech-stack)
+4. [Installation and Setup](#installation-and-setup)
+    - [Clone the Repository](#1-clone-the-repository)
+    - [Setup the Client](#2-setup-the-client)
+    - [Setup the API](#3-setup-the-api)
+    - [Setup the Socket Server](#4-setup-the-socket-server)
+    - [Run the Application](#5-run-the-application)
+    - [Run All Servers](#run-all-servers)
+5. [Usage Scenarios](#usage-scenarios)
+6. [Screenshots](#screenshots)
+
+---
+
 ## **Overview**
 
 **GharDekho** is a user-friendly online platform designed to simplify real estate transactions. It connects property buyers, sellers, and renters in an efficient, transparent, and secure manner. The platform provides robust tools to list, search, and manage properties, along with real-time messaging for seamless communication.
@@ -105,11 +122,13 @@ npm i socket.io
   cd ../socket
   nodemon app.js
   ```
+
 ## **Run All Servers**
 Alternatively, you can automate the process by executing the `start.sh` file, which will start all three servers:
 ```bash
 sh start.sh
 ```
+
 ---
 
 ## **Usage Scenarios**
@@ -123,19 +142,21 @@ sh start.sh
 ## **Screenshots**
 
 - **Home Page (Before Sign-In)**: Overview of the platform and features.  
-  *(Add screenshot here)*  
+  ![Home Page (Before Sign-In)](assets/home-before-signin.png)
 
 - **Search Page (Before Sign-In)**: Search properties using filters.  
-  *(Add screenshot here)*  
+  ![Search Page (Before Sign-In)](assets/search-before-signin.png)
 
 - **Sign-In and Sign-Up Pages**: User authentication interfaces.  
-  *(Add screenshot here)*  
+  ![Sign-In and Sign-Up Pages](assets/signin-signup.png)
 
 - **Home Page (After Sign-In)**: Personalized dashboard with property recommendations.  
-  *(Add screenshot here)*  
+  ![Home Page (After Sign-In)](assets/home-after-signin.png)
 
 - **Property Details Page**: Detailed view of a single property with options to save or contact the seller.  
-  *(Add screenshot here)*  
+  ![Property Details Page](assets/property-details.png)
 
 - **Profile Page**: Manage saved listings, posted properties, and user details.  
-  *(Add screenshot here)*
+  ![Profile Page](assets/profile-page.png)
+
+---
