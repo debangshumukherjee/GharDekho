@@ -105,6 +105,10 @@ npm i socket.io
   cd ../socket
   nodemon app.js
   ```
+## **Run All Servers**
+Alternatively, you can automate the process by executing the `start.sh` file, which will start all three servers:
+```bash
+sh start.sh
 
 ---
 
