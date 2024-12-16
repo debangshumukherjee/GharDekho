@@ -39,6 +39,12 @@
           background-color: #fece51;
           cursor: pointer;
           border: none;
+          p{
+            &:hover {
+              transform: scale(1.05); /* Scales the text */
+              transition: transform 0.2s ease-in-out; /* Smooth scaling transition */
+            }
+          }
         }
       }
 
@@ -61,6 +67,14 @@
           padding: 10px 20px;
           cursor: pointer;
           border-radius: 5px;
+          p{
+            &:hover {
+              transform: scale(1.05); /* Scales the text */
+              transition: transform 0.2s ease-in-out; /* Smooth scaling transition */
+            }
+          }
+          
+          
         }
 
         img{

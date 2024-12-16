@@ -114,8 +114,27 @@ function Chat({ chats, onDeleteChat }) {
             onClick={() => handleOpenChat(c.id, c.receiver)}
           >
             <img src={c.receiver.avatar || "/noavatar.jpg"} alt="" />
-            <span>{c.receiver.username}</span>
-            <p>{c.lastMessage}</p>
+            <div className="namechat">
+              <span>
+                {`${c.receiver.firstname || ""} ${
+                  c.receiver.middlename || ""
+                } ${c.receiver.lastname || ""}`.trim().length > 29
+                  ? `${`${c.receiver.firstname || ""} ${
+                      c.receiver.middlename || ""
+                    } ${c.receiver.lastname || ""}`
+                      .trim()
+                      .slice(0, 26)}...`
+                  : `${c.receiver.firstname || ""} ${
+                      c.receiver.middlename || ""
+                    } ${c.receiver.lastname || ""}`.trim()}
+              </span>
+
+              <p>
+                {c.lastMessage.length > 34
+                  ? `${c.lastMessage.slice(0, 31)}...`
+                  : c.lastMessage}
+              </p>
+            </div>
           </div>
         ))}
       </div>
@@ -124,7 +143,8 @@ function Chat({ chats, onDeleteChat }) {
           <div className="top">
             <div className="user">
               <img src={chat.receiver.avatar || "noavatar.jpg"} alt="" />
-              {chat.receiver.username}
+              {chat.receiver.firstname} {chat.receiver.middlename}{" "}
+              {chat.receiver.lastname}
             </div>
             {/* <button className="deleteChatButton" onClick={handleDeleteChat}>
               Delete Chat
@@ -136,15 +156,9 @@ function Chat({ chats, onDeleteChat }) {
           <div className="center">
             {chat.messages.map((message) => (
               <div
-                className="chatMessage"
-                style={{
-                  alignSelf:
-                    message.userId === currentUser.id
-                      ? "flex-end"
-                      : "flex-start",
-                  textAlign:
-                    message.userId === currentUser.id ? "right" : "left",
-                }}
+                className={`chatMessage ${
+                  message.userId === currentUser.id ? "own" : "other"
+                }`}
                 key={message.id}
               >
                 <p>{message.text}</p>

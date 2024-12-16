@@ -1,3 +1,4 @@
+@import "../../responsive.scss";
 .chat {
   height: 100%;
   display: flex;
@@ -30,10 +31,19 @@
         border-radius: 50%;
         object-fit: cover;
       }
-      
-      span {
-        font-weight: bold;
+      .namechat{
+        span {
+          font-weight: bold;
+        }
+        @include pic470{
+          display:flex;
+          flex-direction: column;
+          word-break: break-word;
+          gap: 10px;
+        }
+
       }
+      
     }
   }
 
@@ -76,21 +86,37 @@
       flex-direction: column;
       gap: 20px;
       
-      .chatMessage{
-        width: 50%;
-        
-        &.own{
+      .chatMessage {
+        max-width: 80%;
+        padding: 10px;
+        border-radius: 5px;
+        display: inline-block;
+        margin: 5px 0;
+        word-wrap: break-word; /* Ensures long words wrap to the next line */
+        word-break: break-word; /* Breaks long words if needed */
+      
+        &.own {
           align-self: flex-end;
           text-align: right;
+          background-color: rgb(137, 255, 137);
         }
-        
-        span{
+      
+        &.other {
+          align-self: flex-start;
+          text-align: left;
+          background-color: rgb(187, 232, 247);
+        }
+      
+        span {
           font-size: 12px;
-          background-color: #f7c14b39;
+          background-color: #e0b04739;
           padding: 2px;
           border-radius: 5px;
+          margin-top: 5px;
         }
       }
+      
+      
     }
     .bottom {
       border-top: 2px solid #f7c14b85;

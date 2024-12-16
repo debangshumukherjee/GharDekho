@@ -16,12 +16,18 @@ function Register() {
     setIsLoading(true);
     const formData = new FormData(e.target);
 
+    const firstname = formData.get("firstname");
+    const middlename = formData.get("middlename") || "";
+    const lastname = formData.get("lastname");
     const username = formData.get("username");
     const email = formData.get("email");
     const password = formData.get("password");
 
     try {
       const res = await apiRequest.post("/auth/register", {
+        firstname,
+        middlename,
+        lastname,
         username,
         email,
         password,
@@ -39,6 +45,9 @@ function Register() {
       <div className="formContainer">
         <form onSubmit={handleSubmit}>
           <h1>Create an Account</h1>
+          <input name="firstname" type="text" placeholder="First Name" required />
+          <input name="middlename" type="text" placeholder="Middle Name"  />
+          <input name="lastname" type="text" placeholder="Last Name" required />
           <input name="username" type="text" placeholder="Username" required />
           <input name="email" type="text" placeholder="Email" required />
           <input

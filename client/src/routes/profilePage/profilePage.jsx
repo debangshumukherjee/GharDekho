@@ -29,7 +29,7 @@ function ProfilePage() {
           <div className="title">
             <h1>User Information</h1>
             <Link to="/profile/update">
-              <button>Update Profile</button>
+              <button><p>Update Profile</p></button>
             </Link>
           </div>
           <div className="info">
@@ -41,14 +41,17 @@ function ProfilePage() {
               Username: <b>{currentUser.username}</b>
             </span>
             <span>
+              Full Name: <b>{currentUser.firstname} {currentUser.middlename} {currentUser.lastname}</b>
+            </span>
+            <span>
               E-mail: <b>{currentUser.email}</b>
             </span>
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleLogout}><p>Logout</p></button>
           </div>
           <div className="title">
             <h1>My List</h1>
             <Link to="/add">
-              <button>Create New Post</button>
+              <button><p>Create New Post</p></button>
             </Link>
           </div>
           <Suspense fallback={<p>Loading...</p>}>

@@ -30,7 +30,7 @@ function Navbar() {
         {currentUser ? (
           <div className="user">
             <img src={currentUser.avatar || "/noavatar.jpg"} alt="" />
-            <span>{currentUser.username}</span>
+            <span>{currentUser.firstname} {currentUser.middlename} {currentUser.lastname}</span>
             <Link to="/profile" className="profile">
               {number > 0 && <div className="notification">{number}</div>}
               <span>Profile</span>
@@ -59,7 +59,7 @@ function Navbar() {
           {currentUser ? (
             <div className="user1">
               <Link to="/profile" className="username">
-                {currentUser.username}
+                {currentUser.firstname}
               </Link>
               <Link to="/profile" className="profile">
                 {number > 0 && <div className="notification">{number}</div>}

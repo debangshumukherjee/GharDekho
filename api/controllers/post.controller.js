@@ -36,6 +36,9 @@ export const getPost = async (req, res) => {
         postDetail: true,
         user: {
           select: {
+            firstname: true,
+            middlename: true,
+            lastname: true,
             username: true,
             avatar: true,
           },

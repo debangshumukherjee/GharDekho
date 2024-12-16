@@ -64,14 +64,14 @@ function SinglePage() {
         // If chat exists, set the chat state to the existing chat
         setChat(chatResponse.data[0]); // Assuming setChat is the state setter for your chat
         setActiveChatId(chatResponse.data[0].id); // Set the active chat ID
-        console.log("inside if statement");
+        
         navigate("/profile");
       } else {
         // If no chat exists, create a new one
         const newChatResponse = await apiRequest.post("/chats", {
           receiverId: post.userId, // Ensure you're passing the correct receiver ID
         });
-        console.log("inside else statement");
+        // console.log("inside else statement");
         // Set the newly created chat in the state
         setChat(newChatResponse.data); // Assuming newChatResponse.data contains the newly created chat
         setActiveChatId(newChatResponse.data.id); // Set the active chat ID
@@ -113,7 +113,8 @@ function SinglePage() {
               </div>
               <div className="user">
                 <img src={post.user.avatar || "/noavatar.jpg"} alt="" />
-                <span>{renderNotGiven(post.user.username)}</span>
+                <span>{renderNotGiven(post.user.firstname)} {renderNotGiven(post.user.middlename)} {renderNotGiven(post.user.lastname)}</span>
+                {/* <span>{renderNotGiven(post.user.username)}</span> */}
               </div>
             </div>
             <div
@@ -214,9 +215,10 @@ function SinglePage() {
                   {renderNotGiven(
                     post.postDetail?.school
                       ? post.postDetail.school >= 1000
-                      ? (post.postDetail.school / 1000).toFixed(1) + " km away" // Display in km if >= 1 km
-                      : post.postDetail.school + " m away" // Otherwise, display in meters
-                    : null
+                        ? (post.postDetail.school / 1000).toFixed(1) +
+                          " km away" // Display in km if >= 1 km
+                        : post.postDetail.school + " m away" // Otherwise, display in meters
+                      : null
                   )}
                 </p>
               </div>
@@ -244,9 +246,10 @@ function SinglePage() {
                   {renderNotGiven(
                     post.postDetail?.restaurant
                       ? post.postDetail.restaurant >= 1000
-                      ? (post.postDetail.restaurant / 1000).toFixed(1) + " km away" // Display in km if >= 1 km
-                      : post.postDetail.restaurant + " m away" // Otherwise, display in meters
-                    : null
+                        ? (post.postDetail.restaurant / 1000).toFixed(1) +
+                          " km away" // Display in km if >= 1 km
+                        : post.postDetail.restaurant + " m away" // Otherwise, display in meters
+                      : null
                   )}
                 </p>
               </div>
@@ -278,15 +281,12 @@ function SinglePage() {
             )}
             {currentUser?.id === post.userId && ( // Show update and delete buttons only if the current user is the owner of the post
               <>
-                <Link to ={`/post/postupdate/${post.id}`}><button>
-                  <img
-                    src="update.png"
-                    alt=""
-                  />
-                  Update 
-                </button>
+                <Link to={`/post/postupdate/${post.id}`}>
+                  <button>
+                    <img src="update.png" alt="" />
+                    Update
+                  </button>
                 </Link>
-                
 
                 <button onClick={handleDelete} className="deleteButton">
                   <img src="/delete.png" alt="" />

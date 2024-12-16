@@ -9,17 +9,21 @@ function ProfileUpdatePage() {
   const { currentUser, updateUser } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [avatar, setAvatar] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData(e.target);
 
-    const { username, email, password } = Object.fromEntries(formData);
+    const { firstname, middlename, lastname, username, email, password } = Object.fromEntries(formData);
 
     try {
       const res = await apiRequest.put(`/users/${currentUser.id}`, {
+        firstname,
+        middlename,
+        lastname,
         username,
         email,
         password,
@@ -38,6 +42,33 @@ function ProfileUpdatePage() {
       <div className="formContainer">
         <form onSubmit={handleSubmit}>
           <h1>Update Profile</h1>
+          <div className="item">
+            <label htmlFor="fullname">First Name</label>
+            <input
+              id="firstname"
+              name="firstname"
+              type="text"
+              defaultValue={currentUser.firstname}
+            />
+          </div>
+          <div className="item">
+            <label htmlFor="middlename">Middle Name</label>
+            <input
+              id="middlename"
+              name="middlename"
+              type="text"
+              defaultValue={currentUser.middlename}
+            />
+          </div>
+          <div className="item">
+            <label htmlFor="fullname">Last Name</label>
+            <input
+              id="lastname"
+              name="lastname"
+              type="text"
+              defaultValue={currentUser.lastname}
+            />
+          </div>
           <div className="item">
             <label htmlFor="username">Username</label>
             <input
@@ -60,7 +91,7 @@ function ProfileUpdatePage() {
             <label htmlFor="password">Password</label>
             <input id="password" name="password" type="password" />
           </div>
-          <button>Update</button>
+          <button className="sendButton" disabled={isLoading}>Update</button>
           {error && <span>error</span>}
         </form>
       </div>

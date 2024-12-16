@@ -21,6 +21,9 @@ export const getChats = async (req, res) => {
         },
         select: {
           id: true,
+          firstname: true,
+          middlename: true,
+          lastname: true,
           username: true,
           avatar: true,
         },
