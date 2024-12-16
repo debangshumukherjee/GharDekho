@@ -17,68 +17,6 @@ function PostUpdatePage() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Fetch existing post data when the component is mounted
-  // useEffect(() => {
-  //   const fetchPost = async () => {
-  //     try {
-  //       const res = await apiRequest.get(`/posts/${id}`);
-  //       setPost(res.data); // Populate state with fetched data
-  //       setValue(res.data.postDetail.desc); // Set the description for ReactQuill
-  //       setImages(res.data.images || []); // Set images if they exist
-  //     } catch (err) {
-  //       console.error(err);
-  //       setError("Failed to fetch post data.");
-  //     } finally {
-  //       setLoading(false); // Set loading to false after fetch attempt
-  //     }
-  //   };
-
-  //   fetchPost();
-  // }, [id]);
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(e.target);
-  //   const inputs = Object.fromEntries(formData);
-
-  //   // Ensure the images array is not empty or undefined
-  //   const updatedImages = images.length ? images : post.images;
-
-  //   try {
-  //     const res = await apiRequest.put(`/posts/${id}`, {
-  //       post: {
-  //         title: inputs.title,
-  //         price: parseInt(inputs.price),
-  //         address: inputs.address,
-  //         city: inputs.city,
-  //         bedroom: parseInt(inputs.bedroom || 0), // Default to 0 if empty
-  //         bathroom: parseInt(inputs.bathroom || 0),
-  //         type: inputs.type,
-  //         property: inputs.property,
-  //         latitude: inputs.latitude.toString(), // Convert to string
-  //         longitude: inputs.longitude.toString(), // Convert to string
-  //         status: inputs.status === "true", // Convert to boolean
-  //         images: updatedImages, // Include images in the request
-  //       },
-  //       postDetail: {
-  //         desc: value, // ReactQuill description
-  //         utilities: inputs.utilities,
-  //         pet: inputs.pet,
-  //         income: inputs.income,
-  //         size: parseInt(inputs.size || 0),
-  //         school: parseInt(inputs.school || 0),
-  //         bus: parseInt(inputs.bus || 0),
-  //         restaurant: parseInt(inputs.restaurant || 0),
-  //       },
-  //     });
-
-  //     // Redirect to the updated post's page
-  //     navigate(`/posts/${id}`);
-  //   } catch (err) {
-  //     console.error(err);
-  //     setError(err.response?.data?.message || "Failed to update post.");
-  //   }
-  // };
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -94,10 +32,9 @@ function PostUpdatePage() {
         setLoading(false);
       }
     };
-  
+
     fetchPost();
   }, [id]);
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -105,7 +42,6 @@ function PostUpdatePage() {
     const formData = new FormData(e.target);
     const inputs = Object.fromEntries(formData);
     try {
-      
       const res = await apiRequest.put(`/posts/${id}`, {
         post: {
           title: inputs.title,
@@ -132,15 +68,13 @@ function PostUpdatePage() {
           restaurant: parseInt(inputs.restaurant),
         },
       });
-  
+
       navigate(`/${res.data.id}`); // Navigate to the updated post's page
     } catch (err) {
       console.error("Error updating post:", err.message);
       setError(err.response?.data?.message || "An error occurred");
     }
   };
-  
-  
 
   // Loading state, display while post data is being fetched
   if (loading) {
@@ -264,10 +198,7 @@ function PostUpdatePage() {
             </div>
             <div className="item">
               <label htmlFor="utilities">Utilities Policy</label>
-              <select
-                name="utilities"
-                defaultValue={post.postDetail.utilities}
-              >
+              <select name="utilities" defaultValue={post.postDetail.utilities}>
                 <option value="owner">Owner is responsible</option>
                 <option value="tenant">Tenant is responsible</option>
                 <option value="shared">Shared</option>
@@ -339,7 +270,6 @@ function PostUpdatePage() {
             </div>
             <div className="item">
               <button type="submit" className="sendButton" disabled={isLoading}>
-              {/* <button type="submit" className="sendButton" disabled={isLoading}> */}
                 Update Post
               </button>
             </div>

@@ -97,113 +97,6 @@ export const addPost = async (req, res) => {
   }
 };
 
-// export const updatePost = async (req, res) => {
-//   const tokenUserId = req.userId; // Assumes req.userId is set with user token
-//   const  {id, body}  = req.body;
-
-//   try {
-//     // Find the post to ensure the correct user is updating it
-//     const post = await prisma.post.findUnique({
-//       where: { id }, // Use the string ID directly
-//     });
-
-//     if (!post) {
-//       return res.status(404).json({ message: "Post not found" });
-//     }
-
-//     // Optionally check if the token user ID matches the post's user ID for authorization
-//     if (post.userId !== tokenUserId) {
-//       return res
-//         .status(403)
-//         .json({ message: "Unauthorized to update this post" });
-//     }
-
-//     // Update the post's status
-//     const updatedPost = await prisma.post.update({
-//       where: { id }, // Use the string ID for update as well
-//       data: { status: !post.status }, // Toggling the status value
-//     });
-//     // console.log(updatedPost);
-//     console.log("Post Updated!!!");
-//     res.status(200).json(updatedPost);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ message: "Failed to update post" });
-//   }
-// };
-
-// export const updatePost = async (req, res) => {
-//   console.log("Update Post Backend");
-//   const tokenUserId = req.userId; // Assumes middleware sets req.userId
-//   const { id, body } = req.body;
-
-//   if (!id) {
-//     return res.status(400).json({ message: "Post ID is required" });
-//   }
-//   console.log("Dhur bapu");
-
-//   try {
-//     const post = await prisma.post.findUnique({
-//       where: { id },
-//     });
-
-//     if (!post) {
-//       return res.status(404).json({ message: "Post not found" });
-//     }
-
-//     if (post.userId !== tokenUserId) {
-//       return res
-//         .status(403)
-//         .json({ message: "Unauthorized to update this post" });
-//     }
-
-//     // Prepare the update data
-//     const updateData = {
-//       ...post, // Copy existing fields to ensure no undefined overwrites
-//       title: body.title || post.title,
-//       price: body.price || post.price,
-//       images: body.images || post.images,
-//       address: body.address || post.address,
-//       city: body.city || post.city,
-//       bedroom: body.bedroom || post.bedroom,
-//       bathroom: body.bathroom || post.bathroom,
-//       latitude: body.latitude || post.latitude,
-//       longitude: body.longitude || post.longitude,
-//       type: body.type || post.type,
-//       property: body.property || post.property,
-//       status: typeof body.status !== "undefined" ? body.status : post.status,
-//     };
-
-//     if (body.postDetail) {
-//       updateData.postDetail = {
-//         update: {
-//           desc: body.postDetail.desc || post.postDetail?.desc,
-//           utilities: body.postDetail.utilities || post.postDetail?.utilities,
-//           pet: body.postDetail.pet || post.postDetail?.pet,
-//           income: body.postDetail.income || post.postDetail?.income,
-//           size: body.postDetail.size || post.postDetail?.size,
-//           school: body.postDetail.school || post.postDetail?.school,
-//           bus: body.postDetail.bus || post.postDetail?.bus,
-//           restaurant: body.postDetail.restaurant || post.postDetail?.restaurant,
-//           status:
-//             typeof body.postDetail.status !== "undefined"
-//               ? body.postDetail.status
-//               : post.postDetail?.status,
-//         },
-//       };
-//     }
-
-//     const updatedPost = await prisma.post.update({
-//       where: { id },
-//       data: updateData,
-//     });
-
-//     return res.status(200).json(updatedPost);
-//   } catch (err) {
-//     console.error("Error updating post:", err.message);
-//     return res.status(500).json({ message: "Failed to update the post" });
-//   }
-// };
 export const updatePost = async (req, res) => {
   const tokenUserId = req.userId; // Assumes middleware sets req.userId
   const { id } = req.params;
@@ -248,8 +141,6 @@ export const updatePost = async (req, res) => {
     res.status(500).json({ message: "Failed to update the post" });
   }
 };
-
-
 
 export const deletePost = async (req, res) => {
   const id = req.params.id;

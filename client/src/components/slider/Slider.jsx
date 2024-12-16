@@ -33,9 +33,11 @@ function Slider({ images }) {
         </div>
       )}
 
-      {images.length === 0 ? <img src="/Image_not_available.png" alt="No Image Available" /> :(images.length === 1 ? ( // Check if there is only one image
+      {images.length === 0 ? (
+        <img src="/Image_not_available.png" alt="No Image Available" />
+      ) : images.length === 1 ? ( // Check if there is only one image
         <div className="singleImage">
-          <img src={images[0]} alt="" onClick={() => setImageIndex(0)}/>
+          <img src={images[0]} alt="" onClick={() => setImageIndex(0)} />
         </div>
       ) : (
         <>
@@ -44,22 +46,26 @@ function Slider({ images }) {
           </div>
           <div className="smallImages">
             {isLessThanOrEqualToFourImages
-              ? images.slice(1).map((image, index) => (
-                  <img
-                    src={image}
-                    alt=""
-                    key={index}
-                    onClick={() => setImageIndex(index + 1)}
-                  />
-                ))
-              : images.slice(1, 3).map((image, index) => (
-                  <img
-                    src={image}
-                    alt=""
-                    key={index}
-                    onClick={() => setImageIndex(index + 1)}
-                  />
-                ))}
+              ? images
+                  .slice(1)
+                  .map((image, index) => (
+                    <img
+                      src={image}
+                      alt=""
+                      key={index}
+                      onClick={() => setImageIndex(index + 1)}
+                    />
+                  ))
+              : images
+                  .slice(1, 3)
+                  .map((image, index) => (
+                    <img
+                      src={image}
+                      alt=""
+                      key={index}
+                      onClick={() => setImageIndex(index + 1)}
+                    />
+                  ))}
             {images.length > 4 && (
               <div className="remaining-count" onClick={() => setImageIndex(3)}>
                 <div className="blurred-image">
@@ -70,7 +76,7 @@ function Slider({ images }) {
             )}
           </div>
         </>
-      ))}
+      )}
     </div>
   );
 }

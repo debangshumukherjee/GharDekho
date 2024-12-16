@@ -2,7 +2,9 @@ export const listData = [
   {
     id: 1,
     title: "A Great Apartment Next to the Beach!",
-    images: ["https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 2,
     bathroom: 1,
     price: 1000,
@@ -13,7 +15,9 @@ export const listData = [
   {
     id: 2,
     title: "An Awesome Apartment Near the Park! Almost too good to be true!",
-    images: ["https://images.pexels.com/photos/1428348/pexels-photo-1428348.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/1428348/pexels-photo-1428348.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 3,
     bathroom: 2,
     price: 1500,
@@ -24,7 +28,9 @@ export const listData = [
   {
     id: 3,
     title: "A New Apartment in the City!",
-    images: ["https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 1,
     bathroom: 1,
     price: 800,
@@ -35,7 +41,9 @@ export const listData = [
   {
     id: 4,
     title: "Great Location! Great Price! Great Apartment!",
-    images: ["https://images.pexels.com/photos/2467285/pexels-photo-2467285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/2467285/pexels-photo-2467285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 2,
     bathroom: 1,
     price: 1000,
@@ -46,7 +54,9 @@ export const listData = [
   {
     id: 5,
     title: "Apartment 5",
-    images: ["https://images.pexels.com/photos/276625/pexels-photo-276625.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/276625/pexels-photo-276625.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 3,
     bathroom: 2,
     price: 1500,
@@ -57,7 +67,9 @@ export const listData = [
   {
     id: 6,
     title: "Apartment 6",
-    images: ["https://images.pexels.com/photos/271816/pexels-photo-271816.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/271816/pexels-photo-271816.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 1,
     bathroom: 1,
     price: 800,
@@ -68,7 +80,9 @@ export const listData = [
   {
     id: 7,
     title: "Apartment 7",
-    images: ["https://images.pexels.com/photos/2029667/pexels-photo-2029667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/2029667/pexels-photo-2029667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 2,
     bathroom: 1,
     price: 1000,
@@ -79,18 +93,22 @@ export const listData = [
   {
     id: 8,
     title: "Apartment 8",
-    images: ["https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 3,
     bathroom: 2,
     price: 1500,
     address: "8765 Manipal Road, Udupi",
     latitude: 13.3502,
-    longitude: 74.7850,
+    longitude: 74.785,
   },
   {
     id: 9,
     title: "Apartment 9",
-    images: ["https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 2,
     bathroom: 5,
     price: 15000,
@@ -101,29 +119,35 @@ export const listData = [
   {
     id: 10,
     title: "A Beautiful Apartment with Sea View in Mumbai",
-    images: ["https://images.pexels.com/photos/276746/pexels-photo-276746.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/276746/pexels-photo-276746.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 3,
     bathroom: 2,
     price: 3000,
     address: "123 Marine Drive, Mumbai",
-    latitude: 18.9440,
+    latitude: 18.944,
     longitude: 72.8234,
   },
   {
     id: 11,
     title: "Luxurious Apartment Near Bandra in Mumbai",
-    images: ["https://images.pexels.com/photos/2121126/pexels-photo-2121126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/2121126/pexels-photo-2121126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 4,
     bathroom: 3,
     price: 4500,
     address: "567 Carter Road, Bandra, Mumbai",
-    latitude: 19.0600,
-    longitude: 72.8290,
+    latitude: 19.06,
+    longitude: 72.829,
   },
   {
     id: 12,
     title: "Spacious Apartment in Powai, Mumbai",
-    images: ["https://images.pexels.com/photos/112811/pexels-photo-112811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/112811/pexels-photo-112811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 2,
     bathroom: 2,
     price: 2000,
@@ -134,7 +158,9 @@ export const listData = [
   {
     id: 13,
     title: "Apartment with Park View in South Kolkata",
-    images: ["https://images.pexels.com/photos/2123245/pexels-photo-2123245.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/2123245/pexels-photo-2123245.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 2,
     bathroom: 1,
     price: 1800,
@@ -145,7 +171,9 @@ export const listData = [
   {
     id: 14,
     title: "Luxurious Flat in Salt Lake, Kolkata",
-    images: ["https://images.pexels.com/photos/271816/pexels-photo-271816.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/271816/pexels-photo-271816.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 4,
     bathroom: 3,
     price: 3500,
@@ -156,7 +184,9 @@ export const listData = [
   {
     id: 15,
     title: "Cozy Apartment Near Gariahat, Kolkata",
-    images: ["https://images.pexels.com/photos/2029667/pexels-photo-2029667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+    images: [
+      "https://images.pexels.com/photos/2029667/pexels-photo-2029667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    ],
     bedroom: 1,
     bathroom: 1,
     price: 1200,
@@ -166,8 +196,6 @@ export const listData = [
   },
 ];
 
-
-  
 export const singlePostData = {
   id: 1,
   title: "Beautiful Apartment Near the Beach",
@@ -192,9 +220,8 @@ export const singlePostData = {
     "A cozy apartment near the beach with beautiful views and modern amenities. Located in a serene neighborhood with easy access to schools, public transport, and restaurants. Perfect for those who want to enjoy coastal living while staying close to city conveniences.",
 };
 
-  
-  export const userData = {
-    id: 1,
-    name: "Samiran Das",
-    img: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  };
+export const userData = {
+  id: 1,
+  name: "Samiran Das",
+  img: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+};

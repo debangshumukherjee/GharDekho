@@ -5,7 +5,10 @@ function Card({ item }) {
   return (
     <div className="card">
       <Link to={`/${item.id}`} className="imageContainer">
-        <img src={item.images[0]? item.images[0]: "/Image_not_available.png"} alt="" />
+        <img
+          src={item.images[0] ? item.images[0] : "/Image_not_available.png"}
+          alt=""
+        />
       </Link>
       <div className="textContainer">
         <h2 className="title">
@@ -27,10 +30,10 @@ function Card({ item }) {
               <span>{item.bathroom} bathroom</span>
             </div>
             {/* Status Display */}
-            {item.status && ( 
-                <span className={`status ${item.status ? 'occupied' : ''}`}>
-                  {item.status ? 'Not available' : ''}
-                </span>
+            {item.status && (
+              <span className={`status ${item.status ? "occupied" : ""}`}>
+                {item.status ? "Not available" : ""}
+              </span>
             )}
           </div>
         </div>

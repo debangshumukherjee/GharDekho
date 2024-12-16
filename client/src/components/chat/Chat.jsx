@@ -81,7 +81,7 @@ function Chat({ chats, onDeleteChat }) {
 
   const handleDeleteChat = async () => {
     const confirmed = window.confirm(
-      "Are you sure you want to delete this chat?",
+      "Are you sure you want to delete this chat?"
     );
     if (confirmed) {
       try {

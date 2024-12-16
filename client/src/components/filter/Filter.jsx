@@ -67,7 +67,6 @@ function Filter() {
             <option value="">any</option>
             <option value="apartment">Apartment</option>
             <option value="house">House</option>
-            {/* <option value="condo">Condo</option> */}
             <option value="land">Land</option>
           </select>
         </div>
@@ -105,7 +104,7 @@ function Filter() {
           />
         </div>
         <button onClick={handleFilter}>
-          <img src="/search.png" alt="" />
+          <img src="/search.png" alt="search button" />
         </button>
       </div>
     </div>
