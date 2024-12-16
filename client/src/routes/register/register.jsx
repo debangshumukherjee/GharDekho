@@ -45,8 +45,13 @@ function Register() {
       <div className="formContainer">
         <form onSubmit={handleSubmit}>
           <h1>Create an Account</h1>
-          <input name="firstname" type="text" placeholder="First Name" required />
-          <input name="middlename" type="text" placeholder="Middle Name"  />
+          <input
+            name="firstname"
+            type="text"
+            placeholder="First Name"
+            required
+          />
+          <input name="middlename" type="text" placeholder="Middle Name" />
           <input name="lastname" type="text" placeholder="Last Name" required />
           <input name="username" type="text" placeholder="Username" required />
           <input name="email" type="text" placeholder="Email" required />

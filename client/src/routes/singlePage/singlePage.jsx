@@ -64,7 +64,7 @@ function SinglePage() {
         // If chat exists, set the chat state to the existing chat
         setChat(chatResponse.data[0]); // Assuming setChat is the state setter for your chat
         setActiveChatId(chatResponse.data[0].id); // Set the active chat ID
-        
+
         navigate("/profile");
       } else {
         // If no chat exists, create a new one
@@ -113,7 +113,11 @@ function SinglePage() {
               </div>
               <div className="user">
                 <img src={post.user.avatar || "/noavatar.jpg"} alt="" />
-                <span>{renderNotGiven(post.user.firstname)} {renderNotGiven(post.user.middlename)} {renderNotGiven(post.user.lastname)}</span>
+                <span>
+                  {renderNotGiven(post.user.firstname)}{" "}
+                  {renderNotGiven(post.user.middlename)}{" "}
+                  {renderNotGiven(post.user.lastname)}
+                </span>
                 {/* <span>{renderNotGiven(post.user.username)}</span> */}
               </div>
             </div>

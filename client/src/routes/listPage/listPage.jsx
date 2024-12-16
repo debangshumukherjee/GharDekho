@@ -20,7 +20,9 @@ function ListPage() {
             >
               {(postResponse) =>
                 postResponse.data.length > 0 ? (
-                  postResponse.data.map((post) => <Card key={post.id} item={post} />)
+                  postResponse.data.map((post) => (
+                    <Card key={post.id} item={post} />
+                  ))
                 ) : (
                   <p>No available posts!</p>
                 )

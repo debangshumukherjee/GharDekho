@@ -29,7 +29,9 @@ function ProfilePage() {
           <div className="title">
             <h1>User Information</h1>
             <Link to="/profile/update">
-              <button><p>Update Profile</p></button>
+              <button>
+                <p>Update Profile</p>
+              </button>
             </Link>
           </div>
           <div className="info">
@@ -41,17 +43,25 @@ function ProfilePage() {
               Username: <b>{currentUser.username}</b>
             </span>
             <span>
-              Full Name: <b>{currentUser.firstname} {currentUser.middlename} {currentUser.lastname}</b>
+              Full Name:{" "}
+              <b>
+                {currentUser.firstname} {currentUser.middlename}{" "}
+                {currentUser.lastname}
+              </b>
             </span>
             <span>
               E-mail: <b>{currentUser.email}</b>
             </span>
-            <button onClick={handleLogout}><p>Logout</p></button>
+            <button onClick={handleLogout}>
+              <p>Logout</p>
+            </button>
           </div>
           <div className="title">
             <h1>My List</h1>
             <Link to="/add">
-              <button><p>Create New Post</p></button>
+              <button>
+                <p>Create New Post</p>
+              </button>
             </Link>
           </div>
           <Suspense fallback={<p>Loading...</p>}>
@@ -82,7 +92,7 @@ function ProfilePage() {
               resolve={data.chatResponse}
               errorElement={<p>Error loading chats!</p>}
             >
-              {(chatResponse) => <Chat chats={chatResponse.data}/>}
+              {(chatResponse) => <Chat chats={chatResponse.data} />}
             </Await>
           </Suspense>
         </div>

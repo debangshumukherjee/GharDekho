@@ -3,7 +3,8 @@ import jwt from "jsonwebtoken";
 import prisma from "../lib/prisma.js";
 
 export const register = async (req, res) => {
-  const { firstname, middlename, lastname, username, email, password } = req.body;
+  const { firstname, middlename, lastname, username, email, password } =
+    req.body;
 
   try {
     // HASH THE PASSWORD

@@ -17,7 +17,8 @@ function ProfileUpdatePage() {
     setIsLoading(true);
     const formData = new FormData(e.target);
 
-    const { firstname, middlename, lastname, username, email, password } = Object.fromEntries(formData);
+    const { firstname, middlename, lastname, username, email, password } =
+      Object.fromEntries(formData);
 
     try {
       const res = await apiRequest.put(`/users/${currentUser.id}`, {
@@ -91,7 +92,9 @@ function ProfileUpdatePage() {
             <label htmlFor="password">Password</label>
             <input id="password" name="password" type="password" />
           </div>
-          <button className="sendButton" disabled={isLoading}>Update</button>
+          <button className="sendButton" disabled={isLoading}>
+            Update
+          </button>
           {error && <span>error</span>}
         </form>
       </div>

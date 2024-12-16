@@ -69,8 +69,8 @@ model User {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId
   email      String      @unique
   username   String      @unique
-  firstname   String
-  middlename   String
+  firstname  String
+  middlename String
   lastname   String
   password   String
   avatar     String?
