@@ -1,0 +1,106 @@
+@use "../../responsive" as *;
+
+.profileUpdatePage {
+  height: 100%;
+  display: flex;
+
+  @include sm {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .formContainer {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    form {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(2, 1fr); // Default: Three inputs in one row
+      width: 100%;
+      max-width: 800px;
+      padding-right: 20px;
+
+      @include md {
+        grid-template-columns: repeat(2, 1fr); // Two inputs in one row for medium screens
+      }
+
+      @include sm {
+        grid-template-columns: 1fr; // One input per row for small screens
+        max-width: fit-content;
+      }
+
+      h1 {
+        grid-column: span 2; // H1 spans across all columns
+        @include md {
+          grid-column: span 2; // Adjust for medium screens
+        }
+        @include sm {
+          grid-column: span 1; // Adjust for small screens
+        }
+        text-align: center;
+        position: sticky;
+        top: 0;
+        background-color: white;
+        z-index: 1;
+        padding: 10px 0;
+      }
+
+      .item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        input {
+          padding: 20px;
+          border-radius: 5px;
+          border: 1px solid gray;
+        }
+      }
+
+      button {
+        padding: 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: teal;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:disabled {
+          background-color: #bed9d8;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  .sideContainer {
+    flex: 2;
+    background-color: #fef9db;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+
+    .avatar {
+      width: 50%;
+      object-fit: cover;
+    }
+
+    @include sm {
+      margin-top: 10px;
+
+      .avatar {
+        padding-top: 15px;
+        width: 20%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+

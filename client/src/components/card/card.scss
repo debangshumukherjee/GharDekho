@@ -1,0 +1,151 @@
+@use "../../responsive" as *;
+
+
+.card {
+    position: relative;
+  display: flex;
+  gap: 20px;
+  border-radius: 10px;
+  &:hover {
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.296);
+    transform: scale(1.003);  
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .status {
+    position: absolute; 
+    left: 10%;
+    top: 20%;
+    transform: rotate(-25deg);
+    // z-index: 10; 
+    visibility: hidden; 
+    @include sm{
+      left: 5%;
+    top: 20%;
+    }
+    &.unavil {
+      visibility: visible;
+    }
+
+    .stamp {
+      max-width: 250px;
+      height: auto;
+      object-fit: cover;
+      @include sm{
+        max-width: 200px;
+      }
+    }
+  }
+  .imageContainer {
+    flex: 2;
+    height: 200px;
+
+    @include md {
+      height: 150px;
+    }
+    @include sm {
+      height: 100px;
+    }
+    @include supersm {
+      display: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid black;
+    }
+  }
+  .textContainer {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #444;
+      transition: all 0.4s ease;
+
+      &:hover {
+        color: #000;
+        scale: 1.01;
+      }
+    }
+
+    .address {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #888;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: 300;
+      padding: 5px;
+      border-radius: 5px;
+      background-color: rgba(254, 205, 81, 0.438);
+      width: max-content;
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+
+      .features {
+        display: flex;
+        gap: 20px;
+        font-size: 14px;
+
+        .feature {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          background-color: whitesmoke;
+          padding: 5px;
+          border-radius: 5px;
+        }
+        .status {
+          font-weight: bold;
+          padding: 5px 10px;
+          border-radius: 5px;
+  
+          &.occupied {
+            background-color: red;
+            color: #fff;
+          }
+        }
+      }
+
+      .icons {
+        display: flex;
+        gap: 20px;
+
+        .icon {
+          border: 1px solid #999;
+          padding: 2px 5px;
+          border-radius: 5px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &:hover {
+            background-color: lightgray;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,107 @@
+@use "../../responsive" as *;
+
+
+.registerPage {
+    height: 100%;
+    display: flex;
+    @include md{
+        background-image: url("/bg.png");
+        width: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    .formContainer {
+      padding-right: 20px;
+      width: calc(60%);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-y: auto;
+      flex-direction: column;
+      h1{
+        padding-bottom: 20px;
+      }
+      form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        width: 100%;
+  
+        input {
+          padding: 20px;
+          border: 1px solid gray;
+          border-radius: 5px;
+          width: calc(50% - 10px);
+        }
+      a {
+        width: 100%; 
+      }
+      .btn{
+        // all: unset;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        button {
+          width: 150px;
+          padding: 20px;
+          border-radius: 5px;
+          border: none;
+          background-color: teal;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+          
+          &:disabled {
+            
+            background-color: #bed9d8;
+            cursor: not-allowed;
+          }
+        }
+      }
+      
+      span {
+        color: rgba(255, 0, 0, 0.591);
+      }
+      .sgnin{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        a {
+          font-size: 14px;
+          color: gray;
+          border-bottom: 1px solid gray;
+          width: max-content;
+        }
+        
+      }
+    }
+    @include md{
+      width: max-content;
+    }
+  }
+  
+  .imgContainer {
+    // flex: 2;
+    
+    width: calc(40%);
+    background-color: #fef9db;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      img {
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      
+      @include md{
+        display: none;
+      }
+    }
+  }
+  

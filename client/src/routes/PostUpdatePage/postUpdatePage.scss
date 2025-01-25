@@ -1,0 +1,138 @@
+@import "../../responsive.scss";
+
+.postUpdate {
+  height: 100%;
+  display: flex;
+  @include md{
+    flex-direction: column;
+    overflow:scroll;
+  }
+
+  .formContainer {
+    flex: 3;
+    overflow-y: auto;
+    
+    @include md{
+      flex: none;
+      height: max-content;
+      margin-bottom: 50px;
+      flex-direction: column;
+    }
+    
+    .wrapper {
+      margin: 30px 50px 100px 0px;
+
+      @include md{
+        margin-right: 10px;
+        margin-bottom: 5px;
+      }
+
+      form {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: center;
+        .item {
+          width: 30%;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+
+          @include sm{
+            width: 100%;
+          }
+          label {   
+            color: rgb(86, 39, 39);
+            // padding-top: 15px;
+            // background-color: red;
+          }
+
+          input {
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid gray;
+          }
+
+          select {
+            padding: 19px;
+          }
+
+          &.description {
+            width: 100%;
+            height: 320px;
+
+            .quill > .ql-toolbar {
+              border: 1px solid black;
+              border-bottom: none;
+            }
+            .quill > .ql-container {
+              border: 1px solid black;
+              
+            }
+            .quill > .ql-container > .ql-editor {
+              height: 200px;
+              font-size: 16px;
+            }
+          }
+        }
+        .sendButton {
+          
+          // width: 30%;
+          height: 70px;
+          border-radius: 5px;
+          border: none;
+          background-color: teal;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+          &:disabled{
+            background-color: #BED9D8;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+
+  .sideContainer {
+    flex: 2;
+    background-color: #fef9db;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    @include md{
+      flex: none;
+      height: max-content;
+    }
+    .imageWrapper{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      img {
+        width: 100%;
+        height: 180px;
+        @include sm{
+          width: 280px;
+          
+        }
+        object-fit: cover;
+        border-radius: 5px;
+      }
+      .delete-button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3px;
+        img{
+          height: 15px;
+          width: 15px;
+        }
+      }
+    }
+  }
+}

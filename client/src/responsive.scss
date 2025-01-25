@@ -1,0 +1,27 @@
+@mixin supersm {
+  @media (max-width: 437px) {
+    @content;
+  }
+}
+@mixin pic470 {
+  @media (max-width: 471px) {
+    @content;
+  }
+}
+@mixin sm {
+  @media (max-width: 738px) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (max-width: 1366px) {
+    @content;
+  }
+}

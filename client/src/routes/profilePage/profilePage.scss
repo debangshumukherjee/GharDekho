@@ -1,0 +1,112 @@
+@use "../../responsive" as *;
+
+
+.profilePage {
+  display: flex;
+  height: 100%;
+
+  @include md{
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  .details {
+    flex: 3;
+    overflow-y: auto;
+    padding-bottom: 50px;
+
+    @include md{
+      flex:none;
+      height: max-content;
+      
+    }
+
+    .wrapper{
+      padding-right: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      .title{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h1{
+          font-weight: 300;
+        }
+
+        button{
+          padding: 12px 24px;
+          background-color: #fece51;
+          cursor: pointer;
+          border: none;
+          border-radius: 5px;
+          p{
+            &:hover {
+              transform: scale(1.05); /* Scales the text */
+              transition: transform 0.2s ease-in-out; /* Smooth scaling transition */
+            }
+          }
+        }
+      }
+
+      .info{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        // background-color: red;
+        word-wrap: break-word; /* Ensures long words wrap to the next line */
+        word-break: break-word; /* Breaks long words if needed */
+
+
+        button{
+          width: 100px;
+          background-color: teal;
+          border: none;
+          color: white;
+          padding: 10px 20px;
+          cursor: pointer;
+          border-radius: 5px;
+          p{
+            &:hover {
+              transform: scale(1.05); /* Scales the text */
+              transition: transform 0.2s ease-in-out; /* Smooth scaling transition */
+            }
+          }
+          
+          
+        }
+
+        img{
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+  .chatContainer {
+    flex: 2;
+    background-color: #fef9db;
+    height: 100%;
+
+    @include md{
+      flex:none;
+      height: max-content;
+    }
+
+    .wrapper{
+      padding: 0px 20px;
+      height: 100%;
+
+      p{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+    }
+  }
+}
