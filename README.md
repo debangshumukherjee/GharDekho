@@ -146,6 +146,16 @@ sh start.sh
   ![Home Page (Before Sign-In)](assets/HomePage.png)
 
 
+  
+- **Home Page (Small Screen)**: Overview of the platform and features.  
+  ![Home Page (Before Sign-In)](assets/HomePage_Small_Screen.png)
+
+
+  
+- **Home Page (Small Screen with Menu option open)**: Overview of the platform and features.  
+  ![Home Page (Before Sign-In)](assets/HomePage_Small_Screen2.png)
+
+
 
 - **Search Page (Before Sign-In)**: Search properties using filters.  
   ![Search Page (Before Sign-In)](assets/ListPage.png)
@@ -169,6 +179,10 @@ sh start.sh
 
 - **Profile Page**: Manage saved listings, posted properties, and user details.  
   ![Profile Page](assets/profile-page.png)
+
+  
+- **Add Post Page**: Adding a new Post about house/apartment/land.  
+  ![Profile Page](assets/Add_Post_Page.png)
 
 
 ---
