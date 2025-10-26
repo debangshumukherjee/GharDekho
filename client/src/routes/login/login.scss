@@ -15,18 +15,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-  
+      flex-direction: column; // To stack form and links
+   
       form {
         display: flex;
         flex-direction: column;
         gap: 20px;
-  
+   
         input{
           padding: 20px;
           border: 1px solid gray;
           border-radius: 5px;
         }
-  
+   
         button{
           padding: 20px;
           border-radius: 5px;
@@ -35,17 +36,17 @@
           color: white;
           font-weight: bold;
           cursor: pointer;
-  
+   
           &:disabled{
             background-color: #BED9D8;
             cursor: not-allowed;
           }
         }
-  
+   
         span{
           color: rgba(255, 0, 0, 0.591);
         }
-  
+   
         a{
           font-size: 14px;
           color: gray;
@@ -53,8 +54,29 @@
           width: max-content;
         }
       }
+      
+      // --- THIS STYLE IS NEW ---
+      .forgotLinks {
+        margin-top: 20px;
+        display: flex;
+        gap: 30px;
+        width: 100%;
+        max-width: 300px; /* Adjust to roughly match form width */
+        justify-content: space-between;
+
+        a {
+            font-size: 12px;
+            color: gray;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+
+            &:hover {
+                border-bottom: 1px solid gray;
+            }
+        }
+      }
     }
-  
+   
     .imgContainer {
       flex: 2;
       background-color: #fef9db;
@@ -62,8 +84,8 @@
       align-items: center;
       justify-content: center;
       position: relative;
-  
-  
+   
+   
       img {
         width: 115%;
         position: absolute;
@@ -75,4 +97,4 @@
       }
     }
   }
-  
+

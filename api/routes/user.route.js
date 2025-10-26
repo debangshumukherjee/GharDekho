@@ -7,12 +7,14 @@ import {
   savePost,
   profilePosts,
   getNotificationNumber,
+  sendUpdateEmailOtp,
 } from "../controllers/user.controller.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
 
 router.get("/", getUsers);
+router.post("/send-update-email-otp", verifyToken, sendUpdateEmailOtp);
 // router.get("/search/:id", verifyToken, getUser);
 router.put("/:id", verifyToken, updateUser);
 router.delete("/:id", verifyToken, deleteUser);

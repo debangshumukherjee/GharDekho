@@ -19,7 +19,7 @@
     form {
       display: grid;
       gap: 20px;
-      grid-template-columns: repeat(2, 1fr); // Default: Three inputs in one row
+      grid-template-columns: repeat(2, 1fr); // Default: Two inputs in one row
       width: 100%;
       max-width: 800px;
       padding-right: 20px;
@@ -58,6 +58,38 @@
           padding: 20px;
           border-radius: 5px;
           border: 1px solid gray;
+        }
+      }
+
+      .otpSection {
+        grid-column: 1 / -1; /* Make this section span both columns */
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    
+        p {
+          font-size: 14px;
+          color: green;
+        }
+    
+        button {
+          width: 100%;
+          background-color: #0a9396 !important; /* Use a different color */
+          padding: 20px;
+          border-radius: 5px;
+          border: none;
+          color: #fff;
+          font-weight: bold;
+          cursor: pointer;
+        }
+
+         input {
+          width: 100%;
+          padding: 20px;
+          border-radius: 5px;
+          border: 1px solid gray;
+          box-sizing: border-box;
         }
       }
 
@@ -103,4 +135,3 @@
     }
   }
 }
-

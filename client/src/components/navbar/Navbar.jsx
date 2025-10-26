@@ -1,18 +1,21 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import { useNotificationStore } from "../../lib/notificationStore";
+import { useChatStore } from "../../lib/chatStore"; // Use the new store
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-
   const { currentUser } = useContext(AuthContext);
 
-  const fetch = useNotificationStore((state) => state.fetch);
-  const number = useNotificationStore((state) => state.number);
+  // Get state and the fetch action from the global store
+  const { number, fetchChats } = useChatStore();
 
-  if (currentUser) fetch();
+  useEffect(() => {
+    if (currentUser) {
+      fetchChats(); // Fetch initial chats and notification count on login
+    }
+  }, [currentUser, fetchChats]);
 
   return (
     <nav>
@@ -70,12 +73,8 @@ function Navbar() {
             </div>
           ) : (
             <>
-              <a href="/login" className="sgnin">
-                Sign in
-              </a>
-              <a href="/register" className="register">
-                Sign up
-              </a>
+              <a href="/login">Sign in</a>
+              <a href="/register">Sign up</a>
             </>
           )}
         </div>

@@ -1,5 +1,6 @@
 import prisma from "../lib/prisma.js";
 import bcrypt from "bcrypt";
+import { sendOTPEmail } from "../lib/mailer.js";
 
 export const getUsers = async (req, res) => {
   try {
@@ -24,27 +25,100 @@ export const getUser = async (req, res) => {
   }
 };
 
+// Helper function to generate a 6-digit OTP
+const generateOTP = () =>
+  Math.floor(100000 + Math.random() * 900000).toString();
+
+// New function to send OTP for email update
+export const sendUpdateEmailOtp = async (req, res) => {
+  const { newEmail } = req.body;
+  const tokenUserId = req.userId;
+
+  try {
+    // Check if the new email is already in use by another verified user
+    const emailInUse = await prisma.user.findFirst({
+      where: { email: newEmail, verified: true, NOT: { id: tokenUserId } },
+    });
+
+    if (emailInUse) {
+      return res
+        .status(400)
+        .json({ message: "This email is already in use by another account." });
+    }
+
+    const otp = generateOTP();
+    const hashedOtp = await bcrypt.hash(otp, 10);
+    const otpExpires = new Date(new Date().getTime() + 10 * 60 * 1000);
+
+    // Store the OTP on the current user's record
+    await prisma.user.update({
+      where: { id: tokenUserId },
+      data: {
+        otp: hashedOtp,
+        otpExpires,
+      },
+    });
+
+    // Send OTP to the NEW email address
+    await sendOTPEmail(newEmail, otp);
+
+    res.status(200).json({ message: "OTP sent to the new email address." });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to send OTP." });
+  }
+};
+
 export const updateUser = async (req, res) => {
   const id = req.params.id;
   const tokenUserId = req.userId;
-  const { password, avatar, ...inputs } = req.body;
+  const { password, avatar, email, otp, ...inputs } = req.body;
 
   if (id !== tokenUserId) {
     return res.status(403).json({ message: "Not Authorized!" });
   }
 
   let updatedPassword = null;
+  let updatedEmail = {};
+
   try {
     if (password) {
       updatedPassword = await bcrypt.hash(password, 10);
+    }
+
+    // If an email is being updated, it must be verified with an OTP
+    if (email) {
+      const user = await prisma.user.findUnique({ where: { id: tokenUserId } });
+
+      if (!otp) {
+        return res
+          .status(400)
+          .json({ message: "OTP is required to update email." });
+      }
+      if (!user.otp || !user.otpExpires || new Date() > user.otpExpires) {
+        return res
+          .status(400)
+          .json({ message: "OTP has expired or is invalid." });
+      }
+
+      const isOtpValid = await bcrypt.compare(otp, user.otp);
+      if (!isOtpValid) {
+        return res.status(400).json({ message: "Invalid OTP." });
+      }
+
+      updatedEmail = { email: email };
     }
 
     const updatedUser = await prisma.user.update({
       where: { id },
       data: {
         ...inputs,
+        ...updatedEmail,
         ...(updatedPassword && { password: updatedPassword }),
         ...(avatar && { avatar }),
+        // Clear OTP fields after successful update
+        otp: null,
+        otpExpires: null,
       },
     });
 
@@ -54,7 +128,7 @@ export const updateUser = async (req, res) => {
     console.log("User's Data Updated");
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to update users!" });
+    res.status(500).json({ message: "Failed to update user!" });
   }
 };
 

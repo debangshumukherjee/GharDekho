@@ -59,6 +59,11 @@ function Login() {
           {error && <span>{error}</span>}
           <Link to="/register">{"Don't"} you have an account?</Link>
         </form>
+        {/* --- THIS SECTION IS NEW --- */}
+        <div className="forgotLinks">
+          <Link to="/forgot-username">Forgot Username?</Link>
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </div>
       </div>
       <div className="imgContainer">
         <img src="/bg.png" alt="" />
@@ -68,3 +73,4 @@ function Login() {
 }
 
 export default Login;
+

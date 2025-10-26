@@ -14,6 +14,10 @@ import {
   singlePageLoader,
 } from "./lib/loaders";
 import PostUpdatePage from "./routes/PostUpdatePage/postUpdatePage";
+// --- IMPORT THE NEW PAGES ---
+import ForgotUsernamePage from "./routes/forgotUsernamePage/ForgotUsernamePage";
+import ForgotPasswordPage from "./routes/forgotPasswordPage/ForgotPasswordPage";
+import ResetPasswordPage from "./routes/resetPasswordPage/ResetPasswordPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -35,7 +39,6 @@ function App() {
           element: <SinglePage />,
           loader: singlePageLoader,
         },
-
         {
           path: "/login",
           element: <Login />,
@@ -43,6 +46,18 @@ function App() {
         {
           path: "/register",
           element: <Register />,
+        },
+        {
+          path: "/forgot-username",
+          element: <ForgotUsernamePage />,
+        },
+        {
+          path: "/forgot-password",
+          element: <ForgotPasswordPage />,
+        },
+        {
+          path: "/reset-password",
+          element: <ResetPasswordPage />,
         },
       ],
     },

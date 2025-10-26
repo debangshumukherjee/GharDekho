@@ -5,23 +5,19 @@ import apiRequest from "../../lib/apiRequest";
 import { Await, Link, useLoaderData, useNavigate } from "react-router-dom";
 import { Suspense, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { SocketContext } from "../../context/SocketContext";
+import { useChatStore } from "../../lib/chatStore"; // Import the global store
 
 function ProfilePage() {
   const data = useLoaderData();
-  const { socket } = useContext(SocketContext);
-
   const { updateUser, currentUser } = useContext(AuthContext);
-
   const navigate = useNavigate();
+
+  // Get the chat list directly from the global store instead of the loader
+  const { chats } = useChatStore();
 
   const handleLogout = async () => {
     try {
       await apiRequest.post("/auth/logout");
-      socket.emit("logout");
-
-      // Optionally, disconnect the socket after emitting the logout event
-      socket.disconnect();
       updateUser(null);
       navigate("/");
     } catch (err) {
@@ -76,15 +72,13 @@ function ProfilePage() {
               resolve={data.postResponse}
               errorElement={<p>Error loading posts!</p>}
             >
-              {(postResponse) => {
-                // Check if there are no posts
-                if (postResponse.data.userPosts.length === 0) {
-                  return <p>No post created!</p>;
-                }
-
-                // If there are posts, render the List
-                return <List posts={postResponse.data.userPosts} />;
-              }}
+              {(postResponse) =>
+                postResponse.data.userPosts.length > 0 ? (
+                  <List posts={postResponse.data.userPosts} />
+                ) : (
+                  <p>No post created!</p>
+                )
+              }
             </Await>
           </Suspense>
           <div className="title">
@@ -95,26 +89,21 @@ function ProfilePage() {
               resolve={data.postResponse}
               errorElement={<p>Error loading posts!</p>}
             >
-              {(postResponse) => {
-                if (postResponse.data.savedPosts.length === 0) {
-                  return <p>No post saved!</p>;
-                }
-                return <List posts={postResponse.data.savedPosts} />;
-              }}
+              {(postResponse) =>
+                postResponse.data.savedPosts.length > 0 ? (
+                  <List posts={postResponse.data.savedPosts} />
+                ) : (
+                  <p>No post saved!</p>
+                )
+              }
             </Await>
           </Suspense>
         </div>
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          <Suspense fallback={<p>Loading...</p>}>
-            <Await
-              resolve={data.chatResponse}
-              errorElement={<p>Error loading chats!</p>}
-            >
-              {(chatResponse) => <Chat chats={chatResponse.data} />}
-            </Await>
-          </Suspense>
+          {/* Pass the chat list from the global store to the Chat component */}
+          <Chat chats={chats} />
         </div>
       </div>
     </div>
@@ -122,3 +111,4 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+

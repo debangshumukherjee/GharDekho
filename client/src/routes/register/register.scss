@@ -1,107 +1,120 @@
 @use "../../responsive" as *;
 
-
 .registerPage {
+  height: 100%;
+  display: flex;
+
+  @include md {
+    background-image: url("/bg.png");
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .formContainer {
+    padding: 0 20px;
+    width: 60%;
     height: 100%;
     display: flex;
-    @include md{
-        background-image: url("/bg.png");
-        width: 100%;
-        background-size: cover;
-        background-repeat: no-repeat;
-      }
-    .formContainer {
-      padding-right: 20px;
-      width: calc(60%);
-      height: 100%;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    flex-direction: column;
+
+    h1 {
+      padding-bottom: 20px;
+    }
+
+    form {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow-y: auto;
-      flex-direction: column;
-      h1{
-        padding-bottom: 20px;
-      }
-      form {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
+      flex-wrap: wrap;
+      gap: 20px;
+      width: 100%;
+      max-width: 500px; /* Added max-width for better control */
+      justify-content: center; /* Center form items */
+
+      p {
         width: 100%;
-  
-        input {
-          padding: 20px;
-          border: 1px solid gray;
-          border-radius: 5px;
-          width: calc(50% - 10px);
-        }
-      a {
-        width: 100%; 
+        text-align: center;
+        color: #555;
       }
-      .btn{
-        // all: unset;
+
+      input {
+        padding: 20px;
+        border: 1px solid gray;
+        border-radius: 5px;
+        width: calc(50% - 10px); /* Two inputs per row */
+
+        /* Full width for OTP input */
+        &[name="otp"] {
+          width: 100%;
+          text-align: center;
+          font-size: 1.2rem;
+        }
+      }
+
+      .btn {
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        button {
-          width: 150px;
-          padding: 20px;
-          border-radius: 5px;
-          border: none;
-          background-color: teal;
-          color: white;
-          font-weight: bold;
-          cursor: pointer;
-          
-          &:disabled {
-            
-            background-color: #bed9d8;
-            cursor: not-allowed;
-          }
+      }
+
+      button {
+        width: 100%; /* Make buttons full-width */
+        max-width: 250px; /* Set a max-width */
+        padding: 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: teal;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        
+        &:disabled {
+          background-color: #bed9d8;
+          cursor: not-allowed;
         }
       }
-      
+
       span {
+        width: 100%;
+        text-align: center;
         color: rgba(255, 0, 0, 0.591);
       }
-      .sgnin{
+      
+      .sgnin, a {
         width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        a {
+        text-align: center;
+        a, & {
           font-size: 14px;
           color: gray;
           border-bottom: 1px solid gray;
           width: max-content;
+          margin: 0 auto;
         }
-        
       }
     }
-    @include md{
-      width: max-content;
+
+    @include md {
+      width: 100%;
     }
   }
-  
+
   .imgContainer {
-    // flex: 2;
-    
-    width: calc(40%);
+    width: 40%;
     background-color: #fef9db;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      img {
-        width: 100%;
-        position: absolute;
-        right: 0;
-        top: 0;
-      }
-      
-      @include md{
-        display: none;
-      }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    img {
+      width: 90%;
+    }
+    
+    @include md {
+      display: none;
     }
   }
-  
+}

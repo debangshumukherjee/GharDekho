@@ -1,65 +1,166 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./chat.scss";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
-import { format } from "timeago.js";
 import { SocketContext } from "../../context/SocketContext";
-import { useNotificationStore } from "../../lib/notificationStore";
+import { useChatStore } from "../../lib/chatStore";
+import { formatTimestamp } from "../../lib/formatters";
 
-function Chat({ chats, onDeleteChat }) {
+function Chat() {
   const [chat, setChat] = useState(null);
-  const [activeChatId, setActiveChatId] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
-  const messageEndRef = useRef();
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const { chats, markAsRead, updateChat } = useChatStore();
+  const { setOpenChatId, clearOpenChatId } = useChatStore();
 
-  const decrease = useNotificationStore((state) => state.decrease);
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [selectedMessages, setSelectedMessages] = useState(new Set());
+
+  const messageEndRef = useRef();
+  const textareaRef = useRef(null);
+  const formRef = useRef(null);
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat]);
+  }, [chat?.messages]);
 
   const handleOpenChat = async (id, receiver) => {
+    setIsDeleteMode(false);
+    setSelectedMessages(new Set());
+
+    if (socket && chat && chat.id !== id) {
+      socket.emit("leaveChatRoom", chat.id);
+    }
     try {
       const res = await apiRequest(`/chats/${id}`);
-      if (!res.data.seenBy.includes(currentUser.id)) {
-        decrease();
-      }
-
+      markAsRead(id);
       setChat({ ...res.data, receiver });
-      setActiveChatId(id);
+      // inform global store which chat is open
+      setOpenChatId(id);
+      if (socket) {
+        socket.emit("joinChatRoom", id);
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
-  useEffect(() => {
-    const read = async () => {
-      try {
-        await apiRequest.put(`/chats/read/${chat.id}`);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    if (chat && socket) {
-      socket.on("getMessage", (data) => {
-        if (chat.id === data.chatId) {
-          setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
-          read();
-        }
-      });
+  const handleCloseChat = () => {
+    if (socket && chat) {
+      socket.emit("leaveChatRoom", chat.id);
     }
-    return () => {
-      socket.off("getMessage");
-    };
-  }, [socket, chat]);
+    setChat(null);
+    setIsDeleteMode(false);
+    setSelectedMessages(new Set());
+    // clear open chat id in global store
+    clearOpenChatId();
+  };
+
+  useEffect(() => {
+    if (chat && !isDeleteMode) {
+      textareaRef.current?.focus();
+    }
+  }, [chat, isDeleteMode]);
+
+  useEffect(() => {
+    if (socket) {
+      const messageHandler = (data) => {
+        if (chat?.id === data.chatId) {
+          setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
+          markAsRead(data.chatId);
+        }
+      };
+
+      const deleteHandler = ({ chatId, messageIds, newLastMessage }) => {
+        updateChat(chatId, newLastMessage);
+
+        if (chat?.id === chatId) {
+          setChat((prev) => ({
+            ...prev,
+            messages: prev.messages.map((msg) =>
+              messageIds.includes(msg.id)
+                ? { ...msg, text: "This message was deleted" }
+                : msg
+            ),
+          }));
+        }
+      };
+
+      socket.on("getMessage", messageHandler);
+      socket.on("messagesSoftDeleted", deleteHandler);
+
+      return () => {
+        socket.off("getMessage", messageHandler);
+        socket.off("messagesSoftDeleted", deleteHandler);
+      };
+    }
+  }, [socket, chat, markAsRead, updateChat]);
+
+  const toggleDeleteMode = () => {
+    setIsDeleteMode((prev) => !prev);
+    setSelectedMessages(new Set());
+  };
+
+  const handleSelectMessage = (messageId) => {
+    setSelectedMessages((prev) => {
+      const newSelection = new Set(prev);
+      if (newSelection.has(messageId)) {
+        newSelection.delete(messageId);
+      } else {
+        newSelection.add(messageId);
+      }
+      return newSelection;
+    });
+  };
+
+  const handleDeleteSelected = async () => {
+    if (selectedMessages.size === 0) return;
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete ${selectedMessages.size} message(s)?`
+    );
+
+    if (isConfirmed) {
+      setIsLoading(true);
+      const messageIdsToDelete = Array.from(selectedMessages);
+      try {
+        const res = await apiRequest.put("/messages/soft-delete", {
+          messageIds: messageIdsToDelete,
+        });
+
+        const { newLastMessage } = res.data;
+
+        setChat((prev) => ({
+          ...prev,
+          messages: prev.messages.map((msg) =>
+            messageIdsToDelete.includes(msg.id)
+              ? { ...msg, text: "This message was deleted" }
+              : msg
+          ),
+        }));
+
+        updateChat(chat.id, newLastMessage);
+
+        socket.emit("deleteMessages", {
+          receiverId: chat.receiver.id,
+          chatId: chat.id,
+          messageIds: messageIdsToDelete,
+          newLastMessage: newLastMessage,
+        });
+
+        toggleDeleteMode();
+      } catch (err) {
+        console.error("Failed to delete messages:", err);
+        alert("An error occurred. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isDeleteMode) return;
     setIsLoading(true);
     const formData = new FormData(e.target);
     const text = formData.get("text");
@@ -70,34 +171,33 @@ function Chat({ chats, onDeleteChat }) {
     }
     try {
       const res = await apiRequest.post(`/messages/${chat.id}`, { text });
-
+      // Update the open chat window
       setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }));
-
       e.target.reset();
+
+      // --- THIS IS THE FIX ---
+      // Update the sender's own chat list in the global store
+      updateChat(chat.id, text, true);
+
+      // Notify the receiver
       socket.emit("sendMessage", {
         receiverId: chat.receiver.id,
         data: res.data,
       });
-      setIsLoading(false);
+
+      textareaRef.current?.focus();
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleDeleteChat = async () => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this chat?"
-    );
-    if (confirmed) {
-      try {
-        await apiRequest.delete(`/chats/${chat.id}`); // Use chat.id instead of id
-
-        // Clear the current chat and active chat ID
-        setChat(null);
-        setActiveChatId(null);
-        navigate("/profile");
-      } catch (err) {
-        console.log("Error deleting chat:", err);
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      if (!isLoading && formRef.current) {
+        formRef.current.requestSubmit();
       }
     }
   };
@@ -107,103 +207,111 @@ function Chat({ chats, onDeleteChat }) {
       <div className="messages">
         <h1>Messages</h1>
         {chats?.length > 0 ? (
-          chats?.map((c) => (
+          chats.map((c) => (
             <div
               className="message"
               key={c.id}
               style={{
-                backgroundColor:
-                  c.seenBy.includes(currentUser.id) || activeChatId === c.id
-                    ? "white"
-                    : "#fecd514e",
+                backgroundColor: c.seenBy.includes(currentUser.id)
+                  ? "white"
+                  : "#fecd514e",
               }}
               onClick={() => handleOpenChat(c.id, c.receiver)}
             >
-              <img src={c.receiver.avatar || "/noavatar.jpg"} alt="" />
+              <img src={c.receiver?.avatar || "/noavatar.jpg"} alt="" />
               <div className="contents">
-                {/* <span>{c.receiver.firstname.length>25?`${c.receiver.firstname.slice(0, 22)}...`
-                  : c.receiver.firstname }</span> */}
-                {/* <span>{c.receiver.username}</span> */}
-                {/* <span>
-                {c.receiver.firstname.length > 25
-                  ? `${c.receiver.firstname.slice(0, 22)}...`
-                  : c.receiver.firstname}
-                {c.receiver.middlename && c.receiver.middlename !== ""
-                  ? ` ${c.receiver.middlename}`
-                  : ""}
-                {c.receiver.lastname && c.receiver.lastname !== ""
-                  ? ` ${c.receiver.lastname}`
-                  : ""}
-              </span> */}
                 <span>
-                  {(() => {
-                    // Combine firstname, middlename, and lastname
-                    const fullName = `${c.receiver.firstname} ${
-                      c.receiver.middlename || ""
-                    } ${c.receiver.lastname || ""}`.trim();
-
-                    // Truncate the full name if it exceeds 25 characters
-                    return fullName.length > 25
-                      ? `${fullName.slice(0, 22)}...` // Keep first 22 characters and add "..."
-                      : fullName;
-                  })()}
+                  {`${c.receiver?.firstname || ""} ${
+                    c.receiver?.middlename || ""
+                  } ${c.receiver?.lastname || ""}`.trim()}
                 </span>
-
                 <p>
-                  {c.lastMessage
-                    ? c.lastMessage.length > 25
-                      ? `${c.lastMessage.slice(0, 22)}...`
-                      : c.lastMessage
-                    : ""}
+                  {c.lastMessage && c.lastMessage.length > 25
+                    ? `${c.lastMessage.slice(0, 22)}...`
+                    : c.lastMessage || "..."}
                 </p>
               </div>
             </div>
           ))
         ) : (
-          <p>Your inbox is empty.</p> // Display a message when there are no chats
+          <p>Your inbox is empty.</p>
         )}
       </div>
       {chat && (
         <div className="chatBox">
           <div className="top">
             <div className="userbar">
-              <img src={chat.receiver.avatar || "noavatar.jpg"} alt="" />
-              {/* {chat.receiver.username} */}
+              <img src={chat.receiver?.avatar || "/noavatar.jpg"} alt="" />
               <span>
-                {chat.receiver.firstname}
-                {chat.receiver.middlename && chat.receiver.middlename !== ""
-                  ? ` ${chat.receiver.middlename}`
-                  : ""}
-                {chat.receiver.lastname && chat.receiver.lastname !== ""
-                  ? ` ${chat.receiver.lastname}`
-                  : ""}
+                {`${chat.receiver?.firstname || ""} ${
+                  chat.receiver?.middlename || ""
+                } ${chat.receiver?.lastname || ""}`.trim()}
               </span>
             </div>
-            {/* <button className="deleteChatButton" onClick={handleDeleteChat}>
-              Delete Chat
-            </button> */}
-            <span className="close" onClick={() => setChat(null)}>
-              X
-            </span>
-          </div>
-          <div className="center">
-            {chat.messages.map((message) => (
-              <div
-                className={`chatMessage ${
-                  message.userId === currentUser.id ? "own" : "other"
-                }`}
-                key={message.id}
+            <div className="actions">
+              <button
+                onClick={toggleDeleteMode}
+                className="action-btn"
+                title="Delete Messages"
               >
-                <p>{message.text}</p>
-                <span>[{format(message.createdAt)}]</span>
-              </div>
-            ))}
+                <img src="/delete.png" alt="Delete" />
+              </button>
+              <span className="close" onClick={handleCloseChat}>
+                X
+              </span>
+            </div>
+          </div>
+          <div className={`center ${isDeleteMode ? "delete-mode" : ""}`}>
+            {chat.messages.map((message) => {
+              const isOwn = message.userId === currentUser.id;
+              const isDeleted = message.text === "This message was deleted";
+              return (
+                <div
+                  key={message.id}
+                  className={`message-container ${isOwn ? "own" : "other"}`}
+                >
+                  {isDeleteMode && isOwn && !isDeleted && (
+                    <input
+                      type="checkbox"
+                      className="message-checkbox"
+                      checked={selectedMessages.has(message.id)}
+                      onChange={() => handleSelectMessage(message.id)}
+                    />
+                  )}
+                  <div className={`chatMessage ${isOwn ? "own" : "other"}`}>
+                    <p className={isDeleted ? "deletedText" : ""}>
+                      {message.text}
+                    </p>
+                    <span>{formatTimestamp(message.createdAt)}</span>
+                  </div>
+                </div>
+              );
+            })}
             <div ref={messageEndRef}></div>
           </div>
-          <form onSubmit={handleSubmit} className="bottom">
-            <textarea name="text"></textarea>
-            <button disabled={isLoading}>Send</button>
-          </form>
+          {isDeleteMode ? (
+            <div className="delete-actions-footer">
+              <button
+                onClick={handleDeleteSelected}
+                disabled={isLoading || selectedMessages.size === 0}
+              >
+                Delete ({selectedMessages.size})
+              </button>
+              <button onClick={toggleDeleteMode}>Cancel</button>
+            </div>
+          ) : (
+            <div className="bottom">
+              <form ref={formRef} onSubmit={handleSubmit}>
+                <textarea
+                  ref={textareaRef}
+                  onKeyDown={handleKeyDown}
+                  name="text"
+                  placeholder="Type a message..."
+                ></textarea>
+                <button disabled={isLoading}>Send</button>
+              </form>
+            </div>
+          )}
         </div>
       )}
     </div>
